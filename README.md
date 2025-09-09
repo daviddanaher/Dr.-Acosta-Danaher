@@ -1,8 +1,8 @@
-<!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Panel de Marca - Dr. Acosta Danaher</title>
+
 <style>
   body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
   .container { max-width:1200px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
@@ -28,7 +28,7 @@
 <div class="container" id="login-container">
   <div class="login-section">
     <h2>Iniciar Sesión</h2>
-    <p>Usuario: DNI | Contraseña: DNI</p>
+
     <input type="text" id="dni" placeholder="Ingrese su DNI"><br>
     <input type="password" id="password" placeholder="Ingrese su DNI como contraseña"><br>
     <button onclick="login()">Ingresar</button>
