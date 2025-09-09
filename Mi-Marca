@@ -5,18 +5,20 @@
 <title>Panel de Marca - Dr. Acosta Danaher</title>
 <style>
   body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
-  .container { max-width:1000px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+  .container { max-width:1200px; margin:40px auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
   h2, h3 { color:#1e88e5; }
   .table-container { overflow-x:auto; margin-bottom:20px; }
-  table { width:100%; border-collapse: collapse; min-width:900px; }
-  th, td { padding:15px; border-bottom:1px solid #ddd; text-align:center; vertical-align:middle; }
-  th { background:#f8f9fa; white-space:nowrap; }
-  td div { display:flex; flex-direction:column; align-items:center; }
-  .verified { color:green; font-weight:bold; font-size:18px; }
-  .not-verified { color:red; font-weight:bold; font-size:18px; }
+  table { width:100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { padding:15px; border-bottom:1px solid #ddd; text-align:center; vertical-align:middle; width:10%; }
+  th { background:#f8f9fa; }
+  td div { display:flex; flex-direction:column; align-items:center; word-wrap: break-word; }
+  .completed { color:green; font-weight:bold; font-size:16px; }
+  .not-completed { color:red; font-weight:bold; font-size:16px; }
   .login-section { text-align:center; padding:50px; }
   input { padding:10px; width:200px; margin:10px 0; border:1px solid #ccc; border-radius:5px; }
-  button { padding:12px 25px; background:#1e88e5; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:16px; }
+  button { padding:12px 25px; background:#1e88e5; color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:16px; margin:5px; }
+  .btn-whatsapp { display:inline-flex; align-items:center; background:#25d366; color:#fff; padding:12px 20px; border-radius:6px; text-decoration:none; margin:5px; }
+  .btn-whatsapp img { width:20px; height:20px; margin-right:10px; }
   .novedades { margin-top:20px; }
   .novedad-item { padding:10px; background:#f8f9fa; border-left:4px solid #1e88e5; margin-bottom:10px; border-radius:5px; text-align:left; }
 </style>
@@ -71,12 +73,17 @@
     </table>
   </div>
 
-  <h3>Novedades</h3>
-  <div class="novedades" id="novedades-list">
-    <!-- Novedades dinámicas -->
+  <h3>Acciones</h3>
+  <div style="text-align:center;">
+    <button onclick="cambiarContrasena()">Cambiar Contraseña</button>
+    <a id="btn-ayuda" class="btn-whatsapp" target="_blank">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> Ayuda
+    </a>
+    <button onclick="logout()">Cerrar Sesión</button>
   </div>
 
-  <button onclick="logout()">Cerrar Sesión</button>
+  <h3>Novedades</h3>
+  <div class="novedades" id="novedades-list"></div>
 </div>
 
 <script>
@@ -145,8 +152,9 @@ function showDashboard(user) {
   document.getElementById("marca-name").textContent = user.marca;
   document.getElementById("marca-categoria").textContent = user.categoria;
 
-  document.getElementById("consulta-status").innerHTML = `<div>${user.consultaVerificado ? "✔" : "✖"}<br>${user.consultaVerificado ? "Verificado" : "No verificado"}</div>`;
-  document.getElementById("registro-status").innerHTML = `<div>${user.registroVerificado ? "✔" : "✖"}<br>${user.registroVerificado ? "Verificado" : "No verificado"}</div>`;
+  document.getElementById("consulta-status").innerHTML = `<div>${user.consultaVerificado ? "✔" : "✖"}<br><span class="${user.consultaVerificado ? 'completed' : 'not-completed'}">${user.consultaVerificado ? 'Completado' : 'No completado'}</span></div>`;
+  document.getElementById("registro-status").innerHTML = `<div>${user.registroVerificado ? "✔" : "✖"}<br><span class="${user.registroVerificado ? 'completed' : 'not-completed'}">${user.registroVerificado ? 'Completado' : 'No completado'}</span></div>`;
+
   document.getElementById("expediente").innerHTML = `<div>${user.expediente}</div>`;
   document.getElementById("fecha-inicio").innerHTML = `<div>${user.fechaInicio}</div>`;
   document.getElementById("propietario").innerHTML = `<div>${user.propietario}</div>`;
@@ -164,6 +172,11 @@ function showDashboard(user) {
     div.innerHTML = `<strong>${n.fecha}, ${n.hora}</strong> - ${n.descripcion}`;
     novedadesList.appendChild(div);
   });
+
+  // Configurar botón ayuda WhatsApp con expediente
+  const ayudaBtn = document.getElementById("btn-ayuda");
+  const mensaje = encodeURIComponent(`Hola, necesito ayuda sobre el proceso de registración de mi marca, mi expediente es ${user.expediente}`);
+  ayudaBtn.href = `https://wa.me/541121679936?text=${mensaje}`;
 }
 
 function logout() {
@@ -171,6 +184,10 @@ function logout() {
   document.getElementById("login-container").style.display = "block";
   document.getElementById("dni").value = "";
   document.getElementById("password").value = "";
+}
+
+function cambiarContrasena() {
+  alert("Funcionalidad de cambio de contraseña en desarrollo.");
 }
 </script>
 
